@@ -82,8 +82,6 @@ class ToolsController < ApplicationController
   end
 
   def proxy
-
-
     @proxy_type = params[:type]
     if @proxy_type == 'getAddressInfo'
       @resources = Address.all

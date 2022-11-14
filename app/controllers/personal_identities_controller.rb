@@ -1,20 +1,4 @@
 class PersonalIdentitiesController < ApplicationController
-  def index
-    @personal_identities = PersonalIdentity.all
-  end
-
-  def show
-    @personal_identity = PersonalIdentity.find(params[:id])
-  end
-
-  def new
-    @personal_identity = PersonalIdentity.new
-  end
-
-  def strac_new
-    @personal_identity = PersonalIdentity.new
-  end
-
   def create
     @personal_identity = PersonalIdentity.new(pi_params)
 
@@ -25,7 +9,26 @@ class PersonalIdentitiesController < ApplicationController
     end
   end
 
+  def destroy
+    @personal_identity = PersonalIdentity.find(params[:id])
+    @personal_identity.destroy
+
+    redirect_to root_path, status: :see_other
+  end
+
   def edit
+    @personal_identity = PersonalIdentity.find(params[:id])
+  end
+
+  def index
+    @personal_identities = PersonalIdentity.all
+  end
+
+  def new
+    @personal_identity = PersonalIdentity.new
+  end
+
+  def show
     @personal_identity = PersonalIdentity.find(params[:id])
   end
 
@@ -43,15 +46,8 @@ class PersonalIdentitiesController < ApplicationController
     @personal_identities = PersonalIdentity.all
   end
 
-  def destroy
-    @personal_identity = PersonalIdentity.find(params[:id])
-    @personal_identity.destroy
-
-    redirect_to root_path, status: :see_other
-  end
-
   private
-  def pi_params
-    params.require(:personal_identity).permit(:name, :ssn, :stracTokens)
-  end
+    def pi_params
+      params.require(:personal_identity).permit(:name, :ssn, :stracTokens)
+    end
 end
