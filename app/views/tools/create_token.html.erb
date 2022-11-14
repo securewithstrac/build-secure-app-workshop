@@ -2,7 +2,10 @@
 
 <h1><%= @title %></h1>
 
-<div style="max-width: 200px;">
+<div style="max-width: 300px;">
+    <label for="apiKey">API key</label>
+    <input type="text" id="apiKey" />
+
     <label for="tokenType">Type</label>
     <input type="text" id="tokenType" value="api-key" />
 
@@ -20,11 +23,10 @@
 
 <script type="text/javascript">
     $(document).ready(async () => {
-        const CreateTokenApiKey = "pk_test_VJjfhYqRcFawG0JNZrYbD6umzY3Hpt8CaZYVDWLO";
-
         $("#strac-submit").on('click', async function (e) {
             e.preventDefault();
 
+            const apiKey = $("#apiKey").val();
             const tokenType = $("#tokenType").val();
             const tokenValue = $("#tokenValue").val();
 
@@ -33,7 +35,7 @@
                 "method": 'POST',
                 'datatype': 'json',
                 "headers": {
-                    "x-api-key": CreateTokenApiKey,
+                    "x-api-key": apiKey,
                     "Content-Type": "application/json"
                 },
                 "data": JSON.stringify({
