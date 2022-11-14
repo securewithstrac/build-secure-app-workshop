@@ -33,6 +33,3 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-# An alternative lightweight method to protect secrets; includes the Strac API key
-.secrets_simple.rb

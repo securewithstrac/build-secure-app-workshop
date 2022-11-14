@@ -1,20 +1,35 @@
 <% @title = @description %>
 
-<a href="/public">Home</a>
+<a href="/">Home</a>
 <br />
 
 <h1><%= @title %></h1>
 
 <div style="max-width: 300px;">
-    <label for="addressId">Address</label>
+    <% if @resource_type == 'address' %>
+        <label for="resourceId">Address</label>
 
-    <select id="addressId">
-        <option value="">Choose address</option>
+        <select id="resourceId">
+            <option value="">Choose address</option>
 
-      <% @addresses.each do |address| %>
-            <option value="<%= address.id %>"><%= address.alias %></option>
-      <% end %>
-    </select>
+          <% @resources.each do |address| %>
+                <option value="<%= address.id %>"><%= address.alias %></option>
+          <% end %>
+        </select>
+    <% end %>
+
+    <% if @resource_type == 'personalIdentity' %>
+        <label for="resourceId">Personal identity</label>
+
+        <select id="resourceId">
+            <option value="">Choose personal identity</option>
+
+            <% @resources.each do |pi| %>
+                <option value="<%= pi.id %>"><%= pi.name %></option>
+            <% end %>
+        </select>
+    <% end %>
+
 
     <% if @show_zip_input %>
         <label for="fromZipCode">Zip code</label>
@@ -44,16 +59,18 @@
         $("#strac-submit").on('click', async function (e) {
             e.preventDefault();
 
-            const addressId = $("#addressId").val();
+            const resourceId = $("#resourceId").val();
 
             $.ajax({
-                "url": `/addresses/${addressId}/proxy`,
+                "url": `/tools/proxy-execute`,
                 "method": "POST",
                 "headers": {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 "data": JSON.stringify({
+                    resource_id: resourceId,
+                    resource_type: '<%= @resource_type %>',
                     authenticity_token: "<%= form_authenticity_token %>",
                     proxy_type: proxyType,
                     from_zip_code: $("#fromZipCode").val()
