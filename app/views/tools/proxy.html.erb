@@ -1,0 +1,72 @@
+<% @title = @description %>
+
+<a href="/public">Home</a>
+<br />
+
+<h1><%= @title %></h1>
+
+<div style="max-width: 300px;">
+    <label for="addressId">Address</label>
+
+    <select id="addressId">
+        <option value="">Choose address</option>
+
+      <% @addresses.each do |address| %>
+            <option value="<%= address.id %>"><%= address.alias %></option>
+      <% end %>
+    </select>
+
+    <% if @show_zip_input %>
+        <label for="fromZipCode">Zip code</label>
+        <input type="text" id="fromZipCode" />
+    <% end %>
+
+    <div>
+        <input type="submit" id="strac-submit" name="commit" value="<%= @submit_text %>" style="margin-top: 10px;">
+    </div>
+</div>
+
+<div id="requestInput" style="display: none; margin-top: 10px;">
+  <strong>Input sent to third-party or proxy:</strong>
+  <pre id="proxyInput"></pre>
+</div>
+
+<div id="apiResponse" style="display: none; margin-top: 10px;">
+  <strong>API response:</strong>
+  <pre id="thirdPartyResponse"></pre>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const proxyType = urlParams.get('type');
+
+        $("#strac-submit").on('click', async function (e) {
+            e.preventDefault();
+
+            const addressId = $("#addressId").val();
+
+            $.ajax({
+                "url": `/addresses/${addressId}/proxy`,
+                "method": "POST",
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                "data": JSON.stringify({
+                    authenticity_token: "<%= form_authenticity_token %>",
+                    proxy_type: proxyType,
+                    from_zip_code: $("#fromZipCode").val()
+                })
+            }).then((result) => {
+                if (proxyType === 'httpBin') {
+                    $("#proxyInput").text(JSON.stringify(result.request_body, null, 4));
+                    $("#requestInput").show();
+                }
+
+                $("#thirdPartyResponse").text(JSON.stringify(result.response_body, null, 4));
+                $("#apiResponse").show();
+            });
+        });
+    });
+</script>

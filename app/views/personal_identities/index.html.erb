@@ -1,0 +1,13 @@
+<h1>Personal identity records</h1>
+
+Total count: <%= PersonalIdentity.count %>
+
+<ul>
+    <% @personal_identities.each do |pi| %>
+        <li>
+            <%= pi.id %>: <%= link_to pi.name, pi %>
+        </li>
+    <% end %>
+</ul>
+
+<%= link_to "New personal identity record", new_personal_identity_path %>

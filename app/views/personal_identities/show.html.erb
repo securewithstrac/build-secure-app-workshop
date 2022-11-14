@@ -1,0 +1,41 @@
+<style>
+    .field {
+        margin-bottom: 10px;
+    }
+</style>
+<a href="/">Home</a>
+<br />
+<h1>Personal identity record for '<%= @personal_identity.name %>'</h1>
+
+<div>
+  <%= link_to "Edit personal identity record", edit_personal_identity_path(@personal_identity) %> | <%= link_to "Delete personal identity record", personal_identity_path(@personal_identity), data: {
+  turbo_method: :delete,
+  turbo_confirm: "Are you sure?"
+} %>
+</div>
+<br />
+<div style="overflow-wrap: break-word; font-family: monospace;">
+    <div class="field">
+        <strong>Name:</strong>
+        <br />
+        <%= @personal_identity.name %>
+    </div>
+
+    <div class="field">
+        <strong>SSN:</strong>
+        <br />
+        <%= @personal_identity.ssn %>
+    </div>
+
+    <div class="field">
+      <strong>ID</strong>
+      <br />
+      <%= @personal_identity.id %>
+    </div>
+
+    <div class="field">
+      <strong>Creation date</strong>
+      <br />
+      <%= @personal_identity.created_at.strftime("%B %d %Y, %l:%M %P") %> UTC
+    </div>
+</div>

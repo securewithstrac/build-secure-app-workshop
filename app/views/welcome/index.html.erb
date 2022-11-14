@@ -1,0 +1,25 @@
+<h1>Welcome to the Strac demo website!</h1>
+<h3>Session 1: protecting API keys</h3>
+<ul>
+
+    <li>Internal API calls</li>
+    <ul>
+        <li><a href="/strac-address/new?tokenize=false">Create address</a></li>
+        <li><a href="/personal_identities/new">Create personal identity (SSN)</a></li>
+    </ul>
+
+    <li>External API calls</li>
+    <ul>
+        <li><a href="/tools/proxy?type=getAddressInfo">API 1: Get city / zip code info</a></li>
+        <li><a href="/tools/proxy?type=getAddressDistance">API 2: Calculate address distance</a></li>
+<!--        <li><a href="/tools/proxy?type=validateSsn">API 3: Verify identity</a></li>-->
+    </ul>
+</ul>
+
+<h3>Helpful tools</h3>
+<ul>
+  <li><a href="/tools/create-token">Create token for API key</a></li>
+  <li><a href="/tools/proxy?type=httpBin">Strac proxy input/output viewer</a></li>
+  <li><a href="/addresses">Manage address database records</a></li>
+  <li><a href="/personal_identities">Manage personal identity database records</a></li>
+</ul>

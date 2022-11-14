@@ -1,0 +1,64 @@
+<%= form_with model: address do |form| %>
+    <div style="max-width: 400px;">
+        <div>
+            <%= form.label :alias, "Alias" %><br>
+            <%= form.text_field :alias %>
+            <% address.errors.full_messages_for(:alias).each do |message| %>
+            <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <%= form.label :line1, "Line 1" %><br>
+            <%= form.text_field :line1 %>
+            <% address.errors.full_messages_for(:line1).each do |message| %>
+              <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <%= form.label :line2, "Line 2" %><br>
+            <%= form.text_field :line2 %>
+            <% address.errors.full_messages_for(:line2).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <%= form.label :city, "City" %><br>
+            <%= form.text_field :city %>
+            <% address.errors.full_messages_for(:city).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <%= form.label :state, "State" %><br>
+            <%= form.text_field :state %>
+            <% address.errors.full_messages_for(:state).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <%= form.label :zipCode, "Zip code" %><br>
+            <%= form.text_field :zipCode %>
+            <% address.errors.full_messages_for(:zipCode).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
+
+        <div>
+          <%= form.label "Strac tokens" %><br>
+          <%= form.text_area :stracTokens, rows: 6 %><br>
+          <% address.errors.full_messages_for(:stracTokens).each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+
+        <div>
+          <%= form.submit submit_button_text %>
+        </div>
+    </div>
+<% end %>

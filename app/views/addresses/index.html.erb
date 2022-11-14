@@ -1,0 +1,13 @@
+<h1>Address records</h1>
+
+Total count: <%= Address.count %>
+
+<ul>
+  <% @addresses.each do |address| %>
+    <li>
+      <%= address.id %>: <%= link_to address.alias, address %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New address record", new_address_path %>

@@ -1,0 +1,16 @@
+<h1>View address</h1>
+
+<div style="max-width: 400px;">
+Select address to view:
+
+<select id="addressToViewSelection">
+    <option value="">Choose address</option>
+
+  <% @addresses.each do |address| %>
+        <option value="<%= address.id %>"><%= address.alias %></option>
+  <% end %>
+</select>
+
+</div>
+
+<!-- TODO: viewer -->

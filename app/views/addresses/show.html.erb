@@ -1,0 +1,65 @@
+<style>
+    .field {
+        margin-bottom: 10px;
+    }
+</style>
+<a href="/">Home</a>
+<br />
+<h1>Address record for '<%= @address.alias %>'</h1>
+
+<div>
+  <%= link_to "Edit address record", edit_address_path(@address) %> | <%= link_to "Delete address record", address_path(@address), data: {
+  turbo_method: :delete,
+  turbo_confirm: "Are you sure?"
+} %>
+</div>
+<br />
+<div style="overflow-wrap: break-word; font-family: monospace;">
+    <div class="field">
+        <strong>Line 1:</strong>
+        <br />
+        <%= @address.line1 %>
+    </div>
+
+    <div class="field">
+        <strong>Line 2:</strong>
+        <br />
+        <%= @address.line2 %>
+    </div>
+
+    <div class="field">
+        <strong>City:</strong>
+        <br />
+        <%= @address.city %>
+    </div>
+
+    <div class="field">
+        <strong>State:</strong>
+        <br />
+        <%= @address.state %>
+    </div>
+
+    <div class="field">
+        <strong>Zip code:</strong>
+        <br />
+        <%= @address.zipCode %>
+    </div>
+
+    <div class="field">
+        <strong>Strac tokens:</strong>
+        <br />
+        <%= @address.stracTokens %>
+    </div>
+
+    <div class="field">
+      <strong>ID</strong>
+      <br />
+      <%= @address.id %>
+    </div>
+
+    <div class="field">
+      <strong>Creation date</strong>
+      <br />
+      <%= @address.created_at.strftime("%B %d %Y, %l:%M %P") %> UTC
+    </div>
+</div>

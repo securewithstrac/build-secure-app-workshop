@@ -1,0 +1,2 @@
+class PersonalIdentity < ApplicationRecord
+end

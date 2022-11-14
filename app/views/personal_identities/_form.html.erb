@@ -1,0 +1,23 @@
+<%= form_with model: personal_identity do |form| %>
+    <div style="max-width: 400px;">
+        <div>
+            <%= form.label :name, "Name" %><br>
+            <%= form.text_field :name %>
+            <% personal_identity.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+            <%= form.label :ssn, "SSN" %><br>
+            <%= form.text_field :ssn %>
+            <% personal_identity.errors.full_messages_for(:ssn).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
+          <%= form.submit submit_button_text %>
+        </div>
+    </div>
+<% end %>

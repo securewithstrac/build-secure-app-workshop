@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @title || "Strac demo site" %></title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+
+  <script type="text/javascript" src="https://api.live.tokenidvault.com/widgets/component-1.0.0.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+      body {
+          background-color: #1d1a27;
+          color: #b7b4c7;
+          font-family: Verdana, sans-serif;
+      }
+
+      h1 {
+          color: #fff;
+      }
+
+      a {
+          color: #fff;
+          text-decoration: underline;
+      }
+
+      iframe {
+          border: none;
+      }
+
+      .shows-boundary {
+          border: 1px dotted #ffe485;
+      }
+
+      input[type="text"], textarea, select {
+          background-color: #302c3f;
+          border: 1px solid #b7b4c7;
+          border-radius: 5px;
+          box-sizing: border-box;
+          margin-bottom: 5px;
+          color: #b7b4c7;
+          width: 100%;
+      }
+
+      #error-message {
+          color: #ff4895;
+          font-weight: 900;
+      }
+
+      input[type="submit"] {
+          color: #302c3f;
+          border: 1px solid #b7b4c7;
+          border-radius: 5px;
+          background-color: #b7b4c7;
+          font-weight: 900;
+          cursor: pointer;
+      }
+
+      label {
+          font-weight: 900;
+          margin-top: 15px;
+      }
+
+      a:hover {
+          text-decoration: none;
+      }
+
+      h3 {
+          color: #b7b4c7;
+      }
+  </style>
+</head>
+
+<body>
+<%= yield %>
+</body>
+</html>
