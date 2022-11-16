@@ -1,0 +1,140 @@
+<% @title = "Create new personal identity" %>
+
+<a href="/">Home</a>
+<br />
+<h1><%= @title %></h1>
+
+<div style="max-width: 500px;">
+<%= form_with model: @personal_identity do |form| %>
+    <div>
+      <%= form.label :name, "Name:" %><br>
+      <%= form.text_field :name %>
+      <% @personal_identity.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+
+    <!-- Hidden inputs correspond to the model field names to demonstrate a POST to the server -->
+    <input type="hidden" name="personal_identity[stracTokens]" id="personal_identity_stracTokens">
+
+    <!-- 62px is the estimated initial height after contents in the frame are rendered -->
+    <div id="strac-widget" style="height:62px;"></div>
+
+    <div id="error-message" style="display: none; margin-bottom: 5px;">Please fill out required fields</div>
+
+    <div>
+      <input type="submit" id="strac-submit" name="commit" value="Create" data-disable-with="Create">
+    </div>
+<% end %>
+</div>
+
+<div style="margin-top: 100px;">
+  <a id="show-boundary">Toggle Strac widget boundary</a>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(async () => {
+        // Public API key not used for authorization; we can create tokens but need an authentication service
+        // when viewing the data.
+        const createTokenApiKey = "pk_test_VJjfhYqRcFawG0JNZrYbD6umzY3Hpt8CaZYVDWLO";
+
+        const BorderRadius = '5px';
+        const WidgetStyles = {
+            'body': {
+                'font-family': 'Verdana, sans-serif',
+                'color': '#b7b4c7',
+                'background-color': '#1d1a27',
+                'padding': '1px' // Approximately prevent overflow of input boundary during selection
+            },
+            'input[type=text]': {
+                'background-color': '#302c3f',
+                'border-radius': '5px',
+                'box-sizing': 'border-box',
+                'line-height': '1',
+                'margin-bottom': '5px',
+                'width': '100%',
+                'color': '#b7b4c7',
+            },
+            '.strac-input-valid': {
+                'border': '1px solid #b7b4c7',
+            },
+            '.strac-input-invalid': {
+                'border-radius': BorderRadius,
+                'border': '1px solid #ff4895'
+            },
+            '.strac-form-label-medium': {
+                'color': '#b7b4c7',
+                'font-weight': '900'
+            },
+        };
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let shouldTokenize = urlParams.get('tokenize') === 'true';
+
+        const fieldDefinition = [
+            [
+                {
+                    'elementType': 'label',
+                    'text': 'Social security number:',
+                    'gridUnits': 12
+                },
+            ], [
+                {
+                    'elementType': 'text',
+                    'type' : 'social_security_number',
+                    'name': 'ssn',
+                    'required': true,
+                    'gridUnits': 12,
+                    'tokenize': shouldTokenize,
+                },
+            ],
+        ];
+
+        const widgetOptions = {
+            fields: fieldDefinition,
+            styles: WidgetStyles
+        };
+
+        const widget = new StracWidget(createTokenApiKey, widgetOptions).injectTokenizeViewer(
+            'strac-widget'
+        ).on(window.StracWidget.events.EVENT_DIMENSION_CHANGED, (invoker, event) => {
+            if (event.height) {
+                // Account for some padding in the body
+                 $("#strac-widget").height(event.height + 10);
+            }
+        });
+
+        $("#strac-submit").on('click', async function (e) {
+            e.preventDefault();
+
+            // TODO: also check alias is valid
+
+            const isFormValid = await widget.isFormValid();
+
+            if (isFormValid) {
+                $("#error-message").hide();
+                $("#submit").hide();
+
+                const namesToTokenizedValues = await widget.getTokenizedValues();
+
+                if (shouldTokenize) {
+                    $("#personal_identity_stracTokens").val(JSON.stringify(namesToTokenizedValues));
+                }
+                else {
+                    for (const name in namesToTokenizedValues) {
+                        $(`#personal_identity_${name}`).val(namesToTokenizedValues[name]);
+                    }
+                }
+
+                $("form").submit();
+            }
+            else {
+                $("#error-message").show();
+            }
+        });
+
+        $("#show-boundary").on('click', function (e) {
+            $("#strac-widget").toggleClass('shows-boundary')
+        });
+    });
+</script>

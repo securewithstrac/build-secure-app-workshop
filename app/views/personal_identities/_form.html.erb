@@ -17,6 +17,14 @@
         </div>
 
         <div>
+            <%= form.label :stracTokens, "Strac tokens" %><br>
+            <%= form.text_field :stracTokens %>
+            <% personal_identity.errors.full_messages_for(:stracTokens).each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+        </div>
+
+        <div>
           <%= form.submit submit_button_text %>
         </div>
     </div>

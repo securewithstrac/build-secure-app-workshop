@@ -1,11 +1,12 @@
 <h1>Welcome to the Strac demo website!</h1>
+
 <h3>Session 1: protecting API keys</h3>
 <ul>
 
     <li>Internal API calls</li>
     <ul>
-        <li><a href="/strac-address/new?tokenize=false">Create address</a></li>
-        <li><a href="/personal_identities/new">Create personal identity (SSN)</a></li>
+        <li><a href="/strac-address/new?tokenize=false">Create address</a> (does not tokenize data)</li>
+        <li><a href="/personal_identities/new">Create personal identity with SSN</a> (does not tokenize data)</li>
     </ul>
 
     <li>External API calls</li>
@@ -14,6 +15,12 @@
         <li><a href="/tools/proxy?type=getAddressDistance">API 2: Calculate address distance</a></li>
         <li><a href="/tools/proxy?type=validateSsn">API 3: Validate SSN</a></li>
     </ul>
+</ul>
+
+<h3>Session 2: securely collecting customer data</h3>
+<ul>
+    <li><a href="/strac_pi/new?tokenize=true">Create personal identity</a> (tokenize data)</li>
+    <li><a href="/strac_pi/view">View personal identity</a></li>
 </ul>
 
 <h3>Tools</h3>

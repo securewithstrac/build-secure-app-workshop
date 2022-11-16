@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/addresses/strac/view", to: "addresses#view"
 
   resources :personal_identities
+  get "/strac_pi/new", to: "personal_identities#strac_new"
+  get "/strac_pi/view", to: "personal_identities#view"
 
   post "/tools/proxy-execute", to: "tools#proxy_execute"
   get "/tools/create-token", to: "tools#create_token"

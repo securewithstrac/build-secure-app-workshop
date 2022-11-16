@@ -1,0 +1,75 @@
+<% @title = "View personal identity" %>
+
+<a href="/">Home</a>
+<br />
+<h1><%= @title %></h1>
+
+<div style="max-width: 400px;">
+    Select tokenized personal identity to view:
+
+    <select id="piToViewSelection">
+        <option value="">Choose personal identity</option>
+
+        <% @personal_identities.each do |pi| %>
+            <option value="<%= pi.id %>"><%= pi.name %></option>
+        <% end %>
+    </select>
+
+    <% @personal_identities.each do |pi| %>
+        <input type="hidden" id="stracTokens<%= pi.id %>" value="<%= pi.stracTokens %>">
+    <% end %>
+
+    <div>
+        <input type="submit" id="view" value="View">
+    </div>
+
+    <div id="strac-viewer" style="height: 30px; margin-top: 50px;"></div>
+
+    <div id="show-boundary-container" style="display: none; margin-top: 50px;">
+        <a id="show-boundary">Toggle Strac widget boundary</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(async () => {
+        $("#view").on('click', async function (e) {
+            e.preventDefault();
+            $("#show-boundary-container").hide();
+            $("#strac-viewer").removeClass('shows-boundary');
+
+            const styles = {
+                "body": {
+                    'font-family': 'Verdana, sans-serif',
+                    'color': '#b7b4c7',
+                    'background-color': '#1d1a27',
+                    'margin': '0'
+                }
+            };
+
+            const DetokenizePublicKey = "pk_test_VJjfhYqRcFawG0JNZrYbD6umzY3Hpt8CaZYVDWLO";
+
+            let widget = new StracWidget(DetokenizePublicKey, { 'styles': styles });
+            widget.on(window.StracWidget.events.EVENT_DATA_READY, function(invoker, event) {
+                $("#show-boundary-container").show();
+            });
+
+            const viewerHtml = `<div>SSN: {{ssn}}</div>`;
+            widget = widget.injectViewer(`strac-viewer`, viewerHtml);
+
+            // In this workshop, our mock authorization server will allow a magic value specified below
+            // However, in the real world, Strac will make a request to your own server.
+            // You would  pass the headers relevant for your own app's authentication.
+            widget.setHeaders('strac-viewer', {
+                'Authorization': 'build-secure-app-workshop-magic-value'
+            });
+
+            const personalIdentityId = $("#piToViewSelection").find(":selected").val();
+            const tokens = $(`#stracTokens${personalIdentityId}`).val();
+            widget.setTokens('strac-viewer', tokens);
+        });
+    });
+
+    $("#show-boundary").on('click', function (e) {
+        $("#strac-viewer").toggleClass('shows-boundary')
+    });
+</script>

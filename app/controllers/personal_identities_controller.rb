@@ -32,6 +32,10 @@ class PersonalIdentitiesController < ApplicationController
     @personal_identity = PersonalIdentity.find(params[:id])
   end
 
+  def strac_new
+    @personal_identity = PersonalIdentity.new
+  end
+
   def update
     @personal_identity = PersonalIdentity.find(params[:id])
 
@@ -43,7 +47,7 @@ class PersonalIdentitiesController < ApplicationController
   end
 
   def view
-    @personal_identities = PersonalIdentity.all
+    @personal_identities = PersonalIdentity.where.not(stracTokens: [nil, ""])
   end
 
   private
